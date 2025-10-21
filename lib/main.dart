@@ -1,7 +1,11 @@
 import 'package:bkash/activity/home_activity.dart';
+import 'package:bkash/activity/inboxActivity.dart';
 import 'package:bkash/activity/signIn_activity.dart';
 import 'package:bkash/activity/test.dart';
 import 'package:flutter/material.dart';
+
+import 'activity/qrCodeScanActivity.dart';
+import 'activity/searchActivity.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,14 +20,15 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
 
       routes: {
-        // '/': (context) => const Test(),
-        '/': (context) => const SignInActivity(),
-        '/home': (context) => const HomeActivity()
+
+        '/': (context) => const HomeActivity(),
+        //'/home': (context) => const HomeActivity(),
+        '/qr': (context) => const Qrcodescanactivity(),
+        '/search': (context) => const SearchActivity(),
+        '/inbox': (context) => const InboxActivity()
+
 
       },
-
-
-
     );
   }
 }
