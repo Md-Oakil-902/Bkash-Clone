@@ -1,3 +1,6 @@
+import 'package:bkash/widget/offerSlider.dart';
+import 'package:bkash/widget/slider.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'inboxActivity.dart';
 import 'searchActivity.dart';
@@ -12,7 +15,6 @@ class HomeActivity extends StatefulWidget {
 
 class _HomeActivityState extends State<HomeActivity>
     with SingleTickerProviderStateMixin {
-  // Boolean to control "See More" toggle
   bool showAllService = false;
   int selectedIndex = 0;
 
@@ -43,54 +45,45 @@ class _HomeActivityState extends State<HomeActivity>
     {'image': "lib/images/donation.png", 'label': 'Donation'},
   ];
 
-  // CHANGED: List of pages to show in IndexedStack
-  late final List<Widget> pages;
-
-  @override
-  void initState() {
-    super.initState();
-    pages = [
-      _buildHomePage(),             // Home page content
-      const Qrcodescanactivity(),   // Your QR scan activity
-      const SearchActivity(),       // Your search activity
-      const InboxActivity(),        // Your inbox activity
-    ];
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // CHANGED: Use IndexedStack to keep bottom bar visible
       body: IndexedStack(
-        index: selectedIndex,  // show the selected page
-        children: pages,
+        index: selectedIndex,
+        // show the selected page
+        children: [
+          _buildHomePage(),
+          const Qrcodescanactivity(),
+          const SearchActivity(),
+          const InboxActivity(),
+        ],
       ),
 
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: selectedIndex,
         onTap: (index) {
           setState(() {
-            selectedIndex = index;  // CHANGED: Only update selectedIndex
+            selectedIndex = index;
           });
         },
         items: bottomNavigationBarItemList
             .map(
               (item) => BottomNavigationBarItem(
-            icon: Image.asset(
-              item['bottomimage'],
-              height: 30,
-              width: 30,
-              color: Colors.grey,
-            ),
-            activeIcon: Image.asset(
-              item['bottomimage'],
-              height: 38,
-              width: 38,
-              color: Colors.pink,
-            ),
-            label: item['bottomlabel'],
-          ),
-        )
+                icon: Image.asset(
+                  item['bottomimage'],
+                  height: 30,
+                  width: 30,
+                  color: Colors.grey,
+                ),
+                activeIcon: Image.asset(
+                  item['bottomimage'],
+                  height: 38,
+                  width: 38,
+                  color: Colors.pink,
+                ),
+                label: item['bottomlabel'],
+              ),
+            )
             .toList(),
         type: BottomNavigationBarType.fixed,
         backgroundColor: Colors.white,
@@ -172,11 +165,11 @@ class _HomeActivityState extends State<HomeActivity>
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       gridDelegate:
-                      const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 4,
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 10,
-                      ),
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 4,
+                            crossAxisSpacing: 10,
+                            mainAxisSpacing: 10,
+                          ),
                       itemCount: visibleServiceList.length,
                       itemBuilder: (context, index) {
                         final item = visibleServiceList[index];
@@ -218,7 +211,7 @@ class _HomeActivityState extends State<HomeActivity>
                   ),
 
                   // 🔹 See More / Close Button
-                  const SizedBox(height: 5),
+                  // const SizedBox(height: 5),
                   TextButton(
                     onPressed: () {
                       setState(() {
@@ -233,7 +226,14 @@ class _HomeActivityState extends State<HomeActivity>
                       ),
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 5),
+
+                  OfferSlider(images: [
+                    'lib/images/cardoffer.png',
+                    'lib/images/minuteoffer.png',
+                    'lib/images/touroffer.png',
+                  ])
+
                 ],
               ),
             ),
